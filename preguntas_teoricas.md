@@ -126,5 +126,7 @@ END;
 
 -- Ejecución del procedimiento
 CALL ObtenerProductosActivos();
+```
+---
 
 > En resumen, los Stored Procedures permiten mejorar el rendimiento, la seguridad y la organización del código SQL, facilitando la gestión eficiente y consistente de la lógica de negocio dentro de la base de datos.
