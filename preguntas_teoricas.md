@@ -130,3 +130,98 @@ CALL ObtenerProductosActivos();
 ---
 
 > En resumen, los Stored Procedures permiten mejorar el rendimiento, la seguridad y la organización del código SQL, facilitando la gestión eficiente y consistente de la lógica de negocio dentro de la base de datos.
+
+### 1.5) Traer todos los productos que tengan una venta
+
+**Solución SQL:**
+
+```sql
+SELECT DISTINCT p.idProducto, p.nombre, p.precio
+FROM productos p
+INNER JOIN ventas v ON p.idProducto = v.idProducto;
+```
+
+## Explicación de la Consulta 1
+
+Esta consulta tiene como objetivo traer todos los productos que han tenido al menos una venta registrada en la base de datos.  
+Se utiliza un **INNER JOIN** para combinar las tablas `productos` y `ventas` únicamente en los casos donde exista correspondencia entre el `idProducto`.
+
+### Detalle paso a paso
+
+1. **FROM productos p**  
+   Se toma `productos` como tabla principal y se le asigna un alias `p` para simplificar la referencia a sus columnas.
+
+2. **INNER JOIN ventas v ON p.idProducto = v.idProducto**  
+   Se realiza un `INNER JOIN` con la tabla `ventas` (`v`) a través de la columna `idProducto`.  
+   Esto garantiza que solo se incluyan los productos que aparecen en la tabla de ventas.
+
+3. **SELECT DISTINCT p.idProducto, p.nombre, p.precio**  
+   Se seleccionan las columnas relevantes de la tabla `productos`.  
+   `DISTINCT` evita que un mismo producto aparezca repetido si tiene varias ventas registradas.
+
+> En resumen, la consulta devuelve la lista de productos que han sido vendidos, mostrando su identificador, nombre y precio, asegurando que cada producto aparezca solo una vez.
+
+### 1.6) Traer todos los productos que tengan ventas y la cantidad total de productos vendidos
+
+**Solución SQL:**
+
+```sql
+SELECT p.idProducto, p.nombre, SUM(v.cantidad) AS total_vendido
+FROM productos p
+INNER JOIN ventas v ON p.idProducto = v.idProducto
+GROUP BY p.idProducto, p.nombre;
+```
+
+## Explicación de la Consulta 2
+
+Esta consulta tiene como objetivo obtener todos los productos que han sido vendidos junto con la **cantidad total de cada producto** vendida en todas las transacciones registradas.
+
+### Detalle paso a paso
+
+1. **FROM productos p**  
+   Se toma la tabla `productos` como base para la consulta y se le asigna un alias `p`.
+
+2. **INNER JOIN ventas v ON p.idProducto = v.idProducto**  
+   Se realiza un `INNER JOIN` para incluir solo los productos que aparecen en la tabla de ventas.
+
+3. **SUM(v.cantidad) AS total_vendido**  
+   La función `SUM()` acumula la cantidad vendida de cada producto en todas las filas de la tabla `ventas`.
+
+4. **GROUP BY p.idProducto, p.nombre**  
+   Se agrupan los resultados por producto, de modo que la suma corresponda a cada producto individual.
+
+> En resumen, la consulta devuelve cada producto vendido junto con el total de unidades vendidas, proporcionando un resumen claro de las ventas por producto.
+
+### 1.7) Traer todos los productos y la suma total ($) vendida por producto
+
+**Solución SQL:**
+
+```sql
+SELECT p.idProducto, p.nombre, COALESCE(SUM(v.cantidad * p.precio), 0) AS total_vendido
+FROM productos p
+LEFT JOIN ventas v ON p.idProducto = v.idProducto
+GROUP BY p.idProducto, p.nombre;
+```
+
+## Explicación de la Consulta 3
+
+El objetivo de esta consulta es obtener **todos los productos**, incluyendo los que no han sido vendidos, junto con la **suma total de dinero generada** por cada producto.
+
+### Detalle paso a paso
+
+1. **FROM productos p**  
+   Se toma la tabla `productos` como base de la consulta y se le asigna un alias `p`.
+
+2. **LEFT JOIN ventas v ON p.idProducto = v.idProducto**  
+   Un `LEFT JOIN` asegura que todos los productos aparezcan en el resultado, incluso si no tienen ventas registradas.
+
+3. **SUM(v.cantidad * p.precio)**  
+   Calcula la suma del total vendido en dinero para cada producto.
+
+4. **COALESCE(..., 0)**  
+   Se reemplazan valores `NULL` por `0` para los productos que no tienen ventas, evitando resultados vacíos.
+
+5. **GROUP BY p.idProducto, p.nombre**  
+   Agrupa los resultados por producto, asegurando que cada suma corresponda al producto correcto.
+
+> En resumen, la consulta proporciona un informe completo de ventas por producto, incluyendo aquellos que no generaron ingresos.
