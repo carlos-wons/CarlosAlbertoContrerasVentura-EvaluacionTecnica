@@ -8,10 +8,11 @@ Proyecto de ejemplo para la evaluación técnica: módulo de inicio de sesión c
 
 ## Pasos para usar
 1. Asegúrate tener JDK 11+ y Maven instalado (o usa el wrapper si lo añades).
-2. Actualiza las credenciales y URL de la base de datos en `DBConnection.java` (host, usuario, contraseña, nombre de BD).
-3. Construir: `mvn clean package`
-4. Ejecutar: `mvn exec:java` (ejecuta `com.miproyecto.auth.LoginFrame` por defecto)
-5. Para crear un usuario de prueba, puedes ejecutar la clase `CrearUsuarioTest` desde tu IDE o usar otra clase `main` cambiando el `mainClass` en el plugin de `pom.xml`.
+2. Ejecuta en MySQL 5.7+ / 8.0
+3. Actualiza las credenciales y URL de la base de datos en `DBConnection.java` (host, usuario, contraseña, nombre de BD).
+4. Construir: `mvn clean package`
+5. Ejecutar: `mvn exec:java` (ejecuta `com.miproyecto.auth.LoginFrame` por defecto)
+6. Para crear un usuario de prueba, puedes ejecutar la clase `CrearUsuarioTest` desde tu IDE o usar otra clase `main` cambiando el `mainClass` en el plugin de `pom.xml`.
 
 > Nota: Las contraseñas se guardan como hash bcrypt. Instala las dependencias desde Maven antes de ejecutar.
 
