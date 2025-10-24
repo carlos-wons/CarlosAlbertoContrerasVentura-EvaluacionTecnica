@@ -23,3 +23,9 @@ Proyecto de ejemplo para la evaluación técnica: módulo de inicio de sesión c
 
 > Nota: Las contraseñas se guardan como hash bcrypt. Instala las dependencias desde Maven antes de ejecutar.
 
+---
+
+## 🎥 Video Demo
+
+Puedes ver la demostración de la aplicación en el siguiente enlace:  
+👉 [Ver video en Google Drive](https://drive.google.com/file/d/1QOzvpw_Jfkp2hoCD-k0Xn2_htGAQb_0o/view?usp=drive_link)
